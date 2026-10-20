@@ -16,13 +16,17 @@ const links = {
     { label: "Cómo trabajamos", href: "#proceso" },
     { label: "Nosotros", href: "#nosotros" },
     { label: "Contacto", href: "#contacto" },
+    { label: "Trabajá con nosotros", href: "/trabaja-con-nosotros" },
   ],
 };
 
 export default function Footer() {
   const scrollTo = (href) => {
-    if (href.startsWith("#")) {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    const element = href.startsWith("#") && document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = href.startsWith("#") ? `/${href}` : href;
     }
   };
 

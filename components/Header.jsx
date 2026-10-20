@@ -33,6 +33,9 @@ export default function Header() {
     const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // Fuera del home la sección no existe: navegamos al home con el ancla.
+      window.location.href = `/${sectionId}`;
     }
     setIsMenuOpen(false);
   };
