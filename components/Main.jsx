@@ -183,8 +183,8 @@ const differentiators = [
 ];
 
 const team = [
-  { name: "Lautaro", img: "/img/Nosotros/Lautaro - DS.jpeg" },
-  { name: "Marce", img: "/img/Nosotros/Marce - DS.jpeg" },
+  { name: "Lautaro", role: "Cofundador", img: "/img/Nosotros/lautaro-perfil.jpg" },
+  { name: "Marce", role: "Cofundador", img: "/img/Nosotros/marce-perfil.jpg" },
 ];
 
 const stack = ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "APIs REST", "WhatsApp API", "OpenAI / Claude", "Vercel", "AWS"];
@@ -548,21 +548,36 @@ export default function Main() {
               <SectionHeader
                 eyebrow="Por qué DevSoul"
                 title="Un equipo chico, senior y comprometido con tu proyecto"
-                desc="Somos desarrolladores de Tucumán, Argentina, trabajando con empresas de toda Latinoamérica. Nos involucramos en tu negocio como si fuera nuestro."
+                desc="Somos Lautaro y Marce, cofundadores de DevSoul. Desde Tucumán trabajamos con empresas de toda Latinoamérica y nos involucramos en cada proyecto como si fuera nuestro."
               />
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 gap-4 max-w-md">
                 {team.map((m) => (
-                  <div key={m.name} className="text-center">
+                  <div
+                    key={m.name}
+                    className="rounded-2xl border overflow-hidden"
+                    style={{ borderColor: "rgba(0,0,0,0.08)", backgroundColor: "#FFFFFF" }}
+                  >
                     <img
                       src={m.img}
-                      alt={m.name}
+                      alt={`${m.name}, ${m.role.toLowerCase()} de DevSoul`}
                       loading="lazy"
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-2xl object-cover border border-zinc-200 mb-2"
+                      className="w-full aspect-square object-cover"
                     />
-                    <p className="text-sm text-zinc-700 font-semibold">{m.name}</p>
+                    <div className="p-4">
+                      <p className="text-lg font-black text-zinc-900 leading-tight">{m.name}</p>
+                      <span
+                        className="inline-block mt-2 text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-md text-[#080808]"
+                        style={{ backgroundColor: PRIMARY }}
+                      >
+                        {m.role}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
+              <p className="mt-5 text-sm text-zinc-500 max-w-md">
+                Cuando trabajás con DevSoul, hablás directamente con nosotros.
+              </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-5">
               {differentiators.map((d) => (
