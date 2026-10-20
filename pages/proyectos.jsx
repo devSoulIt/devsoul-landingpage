@@ -8,15 +8,15 @@ export default function Home() {
     return (
         <div className="text-default-900">
             <NextSeo
-                title="Home: devsoul"
-                description="Welcome to devsoul homepage."
-                canonical="https://devsoul-landingpage.vercel.app/"
+                title="DevSoul | Proyectos"
+                description="Algunos de los proyectos de software que desarrollamos para empresas."
+                canonical="https://devsoul.it/proyectos"
                 openGraph={{
-                    url: "https://devsoul-landingpage.vercel.app/",
+                    url: "https://devsoul.it/proyectos",
                 }}
             />
             <Head>
-                <title>DevSoul</title>
+                <title>DevSoul | Proyectos</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />

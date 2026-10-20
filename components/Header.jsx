@@ -12,13 +12,11 @@ import {
 import { FaArrowRight } from "react-icons/fa";
 
 const menuItems = [
-  { name: "Inicio", link: "#hero" },
-  { name: "Empleados IA", link: "#empleados-ia" },
-  { name: "Métricas", link: "#metricas" },
-  { name: "Cómo Funciona", link: "#como-funciona" },
+  { name: "Servicios", link: "#servicios" },
+  { name: "Proyectos", link: "#proyectos" },
+  { name: "Cómo trabajamos", link: "#proceso" },
   { name: "Nosotros", link: "#nosotros" },
-  { name: "Industrias", link: "#industrias" },
-  { name: "Contacto", link: "#contacto" },
+  { name: "Preguntas", link: "#faq" },
 ];
 
 export default function Header() {
@@ -44,7 +42,7 @@ export default function Header() {
       onMenuOpenChange={setIsMenuOpen}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[#080808]/95 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.06)]"
+          ? "bg-white/90 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.08)]"
           : "bg-transparent"
       }`}
     >
@@ -59,14 +57,14 @@ export default function Header() {
               alt="DevSoul logo"
               className="object-cover h-10 w-10"
             />
-            <span className="text-white font-bold text-lg tracking-tight">
-              Dev<span style={{ color: "#BDF61D" }}>Soul</span>
+            <span className="text-zinc-900 font-bold text-lg tracking-tight">
+              Dev<span style={{ color: "#4D7C0F" }}>Soul</span>
             </span>
           </a>
         </NavbarBrand>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-          className="sm:hidden text-white"
+          className="sm:hidden text-zinc-900"
         />
       </NavbarContent>
 
@@ -75,7 +73,7 @@ export default function Header() {
           <NavbarItem key={i}>
             <button
               onClick={() => scrollToSection(item.link)}
-              className="text-zinc-400 hover:text-white transition-colors duration-200 text-sm tracking-tight relative group"
+              className="text-zinc-600 hover:text-zinc-900 transition-colors duration-200 text-sm tracking-tight relative group"
             >
               {item.name}
               <span
@@ -94,18 +92,18 @@ export default function Header() {
             className="text-[#080808] font-bold rounded-lg text-sm px-5"
             style={{ backgroundColor: "#BDF61D" }}
           >
-            Solicitar demo
+            Hablemos
             <FaArrowRight className="ml-1 text-xs" />
           </Button>
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="bg-[#080808]/98 backdrop-blur-md border-t border-white/5 pt-6">
+      <NavbarMenu className="bg-white/98 backdrop-blur-md border-t border-zinc-200 pt-6">
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <button
               onClick={() => scrollToSection(item.link)}
-              className="w-full text-left text-zinc-300 hover:text-white transition-colors duration-200 py-3 px-4 font-medium border-b border-white/5"
+              className="w-full text-left text-zinc-700 hover:text-zinc-900 transition-colors duration-200 py-3 px-4 font-medium border-b border-zinc-200"
             >
               {item.name}
             </button>
@@ -117,7 +115,7 @@ export default function Header() {
             className="w-full font-bold text-[#080808]"
             style={{ backgroundColor: "#BDF61D" }}
           >
-            Solicitar demo
+            Hablemos
             <FaArrowRight className="ml-2" />
           </Button>
         </NavbarMenuItem>

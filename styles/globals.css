@@ -10,8 +10,8 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: 'Space Grotesk', ParalucentMedium, sans-serif;
-	background-color: #080808;
-	color: #ffffff;
+	background-color: #FAFAF7;
+	color: #18181b;
 }
 
 :root {
@@ -542,16 +542,16 @@ a {
   animation: blink 1s infinite;
 }
 
-/* Dark mode scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #FAFAF7;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {

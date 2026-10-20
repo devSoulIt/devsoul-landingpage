@@ -11,7 +11,7 @@ const structuredData = {
   url: "https://devsoul.it/",
   logo: "https://devsoul.it/img/logos/isotipo 1.png",
   description:
-    "DevSoul crea agentes autónomos de IA que funcionan como empleados digitales en ventas, soporte, administración y operaciones para empresas en Latinoamérica.",
+    "DevSoul desarrolla software a medida para empresas: sistemas de gestión, apps web y mobile, integraciones y automatización con IA.",
   sameAs: [
     "https://www.instagram.com/dev.soul.it",
     "https://www.linkedin.com/company/104109828",
@@ -23,32 +23,38 @@ const structuredData = {
     areaServed: "LATAM",
     availableLanguage: "Spanish",
   },
-  offers: {
-    "@type": "Offer",
-    name: "Empleados Digitales con IA",
-    description:
-      "Agentes autónomos de IA especializados: SDRSoul, SupportSoul, AdminSoul, OpsSoul, ClinicSoul",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "San Miguel de Tucumán",
+    addressCountry: "AR",
   },
+  knowsAbout: [
+    "Desarrollo de software a medida",
+    "Sistemas de gestión",
+    "Aplicaciones web y mobile",
+    "Integraciones de sistemas",
+    "Automatización con inteligencia artificial",
+  ],
 };
 
 export default function Home() {
   return (
-    <div className="bg-[#080808] text-white">
+    <div className="bg-[#FAFAF7] text-zinc-900">
       <NextSeo
-        title="DevSoul | Empleados Digitales con IA para tu Empresa | Latinoamérica"
-        description="DevSoul crea agentes autónomos de IA que trabajan como empleados digitales en ventas, soporte, administración y operaciones. Transformá tu empresa con workforce digital inteligente en Latinoamérica."
+        title="DevSoul | Desarrollo de Software a Medida para Empresas"
+        description="Convertimos planillas, procesos manuales y pedidos por WhatsApp en sistemas hechos para tu empresa. Sistemas de gestión, apps web y mobile, integraciones y automatización con IA."
         canonical="https://devsoul.it/"
         openGraph={{
           url: "https://devsoul.it/",
-          title: "DevSoul | Empleados Digitales con IA",
+          title: "DevSoul | Software a medida para empresas",
           description:
-            "Agentes autónomos de IA para empresas. SDRSoul, SupportSoul, AdminSoul, OpsSoul y ClinicSoul. Workforce digital para Latinoamérica.",
+            "Sistemas de gestión, apps web y mobile, integraciones y automatización con IA, diseñados alrededor de cómo trabaja tu empresa.",
           images: [
             {
               url: "https://devsoul.it/img/logos/isotipo 1.png",
               width: 1200,
               height: 630,
-              alt: "DevSoul — AI Workforce para Empresas",
+              alt: "DevSoul — Software a medida para empresas",
             },
           ],
           site_name: "DevSoul",
@@ -62,15 +68,15 @@ export default function Home() {
           {
             name: "keywords",
             content:
-              "empleados digitales IA, agentes autónomos, automatización empresarial, AI workforce, SDRSoul, SupportSoul, AdminSoul, inteligencia artificial empresas, workforce digital, Latinoamérica, automatización ventas, soporte automatizado",
+              "desarrollo de software a medida, software para empresas, sistemas de gestión, desarrollo de apps, aplicaciones web, integraciones, automatización con IA, software factory Tucumán, desarrollo de software Argentina",
           },
           { name: "author", content: "DevSoul" },
           { name: "robots", content: "index, follow" },
-          { name: "theme-color", content: "#080808" },
+          { name: "theme-color", content: "#FAFAF7" },
         ]}
       />
       <Head>
-        <title>DevSoul | Empleados Digitales con IA</title>
+        <title>DevSoul | Software a medida para empresas</title>
         <link rel="icon" href="/img/logos/isotipo 1.png" />
         <script
           type="application/ld+json"

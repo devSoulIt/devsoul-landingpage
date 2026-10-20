@@ -7,7 +7,7 @@ export default function Main() {
 
             <div className="container px-5 pt-32 mx-auto lg:px-4 lg:py-4 mb-8">
                 <div className="flex flex-col w-full mb-2 text-left md:text-center ">
-                    <h1 className="mb-2 text-4xl font-bold tracking-tighter text-white lg:text-6xl md:text-5xl">
+                    <h1 className="mb-2 text-4xl font-bold tracking-tighter text-zinc-900 lg:text-6xl md:text-5xl">
                         <span>Algunos de nuestros proyectos</span>
                     </h1>
                 </div>
