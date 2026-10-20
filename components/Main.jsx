@@ -185,7 +185,6 @@ const differentiators = [
 const team = [
   { name: "Lautaro", img: "/img/Nosotros/Lautaro - DS.jpeg" },
   { name: "Marce", img: "/img/Nosotros/Marce - DS.jpeg" },
-  { name: "Pablo", img: "/img/Nosotros/Pablo - DS.jpeg" },
 ];
 
 const stack = ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "APIs REST", "WhatsApp API", "OpenAI / Claude", "Vercel", "AWS"];
