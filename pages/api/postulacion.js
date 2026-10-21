@@ -54,7 +54,7 @@ const post = async (req, res) => {
     }
 
     const devsoulEmail = process.env.DEVSOUL_NOTIFICATION_EMAIL || 'devsoul256@gmail.com'
-    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'hello@devsoul.it'
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'hello@devsoulit.com'
     const safeFileName = `CV - ${String(name).replace(/[^\p{L}\p{N} _-]/gu, '').trim() || 'postulante'}.${extension}`
 
     const rows = [

@@ -77,7 +77,7 @@ export default function Footer() {
               <FaLinkedin />
             </a>
             <a
-              href="mailto:hello@devsoul.it"
+              href="mailto:hello@devsoulit.com"
               className="w-9 h-9 rounded-lg border flex items-center justify-center text-zinc-500 hover:text-zinc-900 hover:border-zinc-400 transition-all duration-200"
               style={{ borderColor: "rgba(0,0,0,0.12)" }}
               aria-label="Email"
@@ -120,10 +120,10 @@ export default function Footer() {
             <span className="hover:text-zinc-600 cursor-pointer transition-colors">Política de Privacidad</span>
             <span className="hover:text-zinc-600 cursor-pointer transition-colors">Términos de Servicio</span>
             <a
-              href="mailto:hello@devsoul.it"
+              href="mailto:hello@devsoulit.com"
               className="hover:text-zinc-600 transition-colors"
             >
-              hello@devsoul.it
+              hello@devsoulit.com
             </a>
           </div>
         </div>

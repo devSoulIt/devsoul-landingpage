@@ -18,7 +18,7 @@ const structuredData = {
   ],
   contactPoint: {
     "@type": "ContactPoint",
-    email: "hello@devsoul.it",
+    email: "hello@devsoulit.com",
     contactType: "customer service",
     areaServed: "LATAM",
     availableLanguage: "Spanish",

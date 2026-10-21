@@ -79,8 +79,8 @@ export default function Evento() {
         <ContactForm source="Evento" compact />
 
         <div className="mt-10 flex flex-col gap-3 text-sm">
-          <a href="mailto:hello@devsoul.it" className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 transition-colors">
-            <FaEnvelope /> hello@devsoul.it
+          <a href="mailto:hello@devsoulit.com" className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 transition-colors">
+            <FaEnvelope /> hello@devsoulit.com
           </a>
           <a href="/#proyectos" className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 transition-colors">
             Ver nuestros proyectos <FaArrowRight className="text-xs" />
