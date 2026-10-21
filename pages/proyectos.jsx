@@ -10,9 +10,9 @@ export default function Home() {
             <NextSeo
                 title="DevSoul | Proyectos"
                 description="Algunos de los proyectos de software que desarrollamos para empresas."
-                canonical="https://devsoul.it/proyectos"
+                canonical="https://www.devsoulit.com/proyectos"
                 openGraph={{
-                    url: "https://devsoul.it/proyectos",
+                    url: "https://www.devsoulit.com/proyectos",
                 }}
             />
             <Head>

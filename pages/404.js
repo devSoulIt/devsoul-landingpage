@@ -9,9 +9,9 @@ export default function Contact() {
       <NextSeo
         title="Home: devsoul"
         description="Welcome to devsoul homepage."
-        canonical="https://devsoul-landingpage.vercel.app/"
+        canonical="https://www.devsoulit.com/"
         openGraph={{
-          url: "https://devsoul-landingpage.vercel.app/",
+          url: "https://www.devsoulit.com/",
         }}
       />
       <Head>

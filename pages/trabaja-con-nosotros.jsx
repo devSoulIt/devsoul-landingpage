@@ -80,7 +80,7 @@ export default function TrabajaConNosotros() {
       <NextSeo
         title="DevSoul | Trabajá con nosotros"
         description="Sumate a DevSoul: desarrollamos software a medida para empresas. Dejanos tus datos y tu CV."
-        canonical="https://devsoul.it/trabaja-con-nosotros"
+        canonical="https://www.devsoulit.com/trabaja-con-nosotros"
       />
       <Head>
         <link rel="icon" href="/img/logos/isotipo 1.png" />

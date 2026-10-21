@@ -85,7 +85,7 @@ export default function Juego() {
       <NextSeo
         title="DevSoul | Construí tu sistema"
         description="Jugá a Construí tu sistema y competí por premios en el stand de DevSoul."
-        canonical="https://devsoul.it/juego"
+        canonical="https://www.devsoulit.com/juego"
         noindex
       />
       <Head>

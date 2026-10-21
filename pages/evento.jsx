@@ -20,7 +20,7 @@ export default function Evento() {
       <NextSeo
         title="DevSoul | Diagnóstico gratuito"
         description="Diagnóstico gratuito para asistentes al evento: te ayudamos a convertir tus procesos manuales en un sistema hecho para tu empresa."
-        canonical="https://devsoul.it/evento"
+        canonical="https://www.devsoulit.com/evento"
         noindex
       />
       <Head>

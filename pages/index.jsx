@@ -8,8 +8,8 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "DevSoul",
-  url: "https://devsoul.it/",
-  logo: "https://devsoul.it/img/logos/isotipo 1.png",
+  url: "https://www.devsoulit.com/",
+  logo: "https://www.devsoulit.com/img/logos/isotipo 1.png",
   description:
     "DevSoul desarrolla software a medida para empresas: sistemas de gestión, apps web y mobile, integraciones y automatización con IA.",
   sameAs: [
@@ -43,15 +43,15 @@ export default function Home() {
       <NextSeo
         title="DevSoul | Desarrollo de Software a Medida para Empresas"
         description="Convertimos planillas, procesos manuales y pedidos por WhatsApp en sistemas hechos para tu empresa. Sistemas de gestión, apps web y mobile, integraciones y automatización con IA."
-        canonical="https://devsoul.it/"
+        canonical="https://www.devsoulit.com/"
         openGraph={{
-          url: "https://devsoul.it/",
+          url: "https://www.devsoulit.com/",
           title: "DevSoul | Software a medida para empresas",
           description:
             "Sistemas de gestión, apps web y mobile, integraciones y automatización con IA, diseñados alrededor de cómo trabaja tu empresa.",
           images: [
             {
-              url: "https://devsoul.it/img/logos/isotipo 1.png",
+              url: "https://www.devsoulit.com/img/logos/isotipo 1.png",
               width: 1200,
               height: 630,
               alt: "DevSoul — Software a medida para empresas",
