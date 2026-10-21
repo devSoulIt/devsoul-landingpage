@@ -64,6 +64,18 @@ export default function Evento() {
           ))}
         </ul>
 
+        <a
+          href="/juego"
+          className="flex items-center justify-between gap-4 rounded-2xl border p-5 mb-8 transition-all hover:-translate-y-0.5"
+          style={{ borderColor: "rgba(77,124,15,0.35)", backgroundColor: "rgba(189,246,29,0.2)" }}
+        >
+          <span>
+            <span className="block font-black text-lg">🏆 Jugá y ganá premios</span>
+            <span className="block text-sm text-zinc-600">Construí tu sistema: el mejor puntaje del día gana.</span>
+          </span>
+          <FaArrowRight className="flex-shrink-0" style={{ color: ACCENT }} />
+        </a>
+
         <ContactForm source="Evento" compact />
 
         <div className="mt-10 flex flex-col gap-3 text-sm">
