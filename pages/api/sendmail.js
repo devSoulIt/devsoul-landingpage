@@ -81,6 +81,7 @@ const post = async (req, res) => {
       headers,
       body: JSON.stringify({
         to: [{ email: devsoulEmail, name: 'DevSoul' }],
+        replyTo: { email, name },
         templateId: 5,
         params: {
           nombre: name,
