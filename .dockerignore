@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.github
+.vercel
+.env*
+Dockerfile
+README.md
+prompt.md
