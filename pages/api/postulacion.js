@@ -22,7 +22,7 @@ export default function handler(req, res) {
 
 const post = async (req, res) => {
   try {
-    const { name, email, phone, link, area, message, cvName, cvBase64, website } = req.body || {}
+    const { name, email, phone, link, area, message, cvName, cvBase64, website, source } = req.body || {}
 
     // Honeypot: los bots completan este campo oculto.
     if (website) {
@@ -80,8 +80,8 @@ const post = async (req, res) => {
         sender: { email: senderEmail, name: 'DevSoul Web' },
         to: [{ email: devsoulEmail, name: 'DevSoul' }],
         replyTo: { email, name },
-        subject: `Nueva postulación: ${name}${area ? ` — ${area}` : ''}`,
-        htmlContent: `<h2>Nueva postulación desde la web</h2>${rows}<p>El CV está adjunto.</p>`,
+        subject: `${source === 'juego' ? '[Evento] ' : ''}Nueva postulación: ${name}${area ? ` — ${area}` : ''}`,
+        htmlContent: `<h2>Nueva postulación desde ${source === 'juego' ? 'el juego del evento' : 'la web'}</h2>${rows}<p>El CV está adjunto.</p>`,
         attachment: [{ name: safeFileName, content: cvBuffer.toString('base64') }]
       })
     });

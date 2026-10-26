@@ -5,6 +5,7 @@ import axios from "axios";
 import { FaArrowRight, FaRedo, FaTrophy } from "react-icons/fa";
 import StackGame from "../../components/StackGame";
 import RankingList from "../../components/RankingList";
+import CvPicker, { readAsBase64 } from "../../components/CvPicker";
 
 const PRIMARY = "#BDF61D";
 // Verde oscuro para texto e íconos: el lima no tiene contraste sobre fondo claro.
@@ -163,6 +164,7 @@ function Intro() {
 
 function Registro({ onRegistered }) {
   const [data, setData] = useState({ name: "", company: "", email: "", phone: "" });
+  const [cv, setCv] = useState(null);
   const [sending, setSending] = useState(false);
   const set = (field) => (e) => setData((p) => ({ ...p, [field]: e.target.value }));
 
@@ -173,11 +175,30 @@ function Registro({ onRegistered }) {
     setSending(true);
     try {
       const { data: res } = await axios.post("/api/juego/registro", data);
+      if (cv) await sendCv();
       onRegistered({ playerId: res.playerId, name: res.name });
     } catch (err) {
       alert(errorMessage(err, "No se pudo completar el registro"));
     } finally {
       setSending(false);
+    }
+  };
+
+  // El CV es opcional: si no se puede enviar, avisamos pero igual se juega.
+  const sendCv = async () => {
+    try {
+      const cvBase64 = await readAsBase64(cv);
+      await axios.post("/api/postulacion", {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.company ? `Empresa: ${data.company}` : "",
+        cvName: cv.name,
+        cvBase64,
+        source: "juego",
+      });
+    } catch (err) {
+      alert(`${errorMessage(err, "No pudimos enviar tu CV")}. Igual ya podés jugar.`);
     }
   };
 
@@ -192,17 +213,18 @@ function Registro({ onRegistered }) {
         <input className={inputClass} placeholder="Empresa" autoComplete="organization" value={data.company} onChange={set("company")} />
         <input className={inputClass} type="email" placeholder="Email *" autoComplete="email" value={data.email} onChange={set("email")} />
         <input className={inputClass} type="tel" placeholder="Teléfono / WhatsApp" autoComplete="tel" value={data.phone} onChange={set("phone")} />
+        <CvPicker cv={cv} onChange={setCv} label="¿Buscás trabajo? Sumá tu CV (opcional)" />
         <button
           type="submit"
           disabled={sending}
           className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-black text-[#080808] text-lg transition-all hover:opacity-90 disabled:opacity-60"
           style={{ backgroundColor: PRIMARY }}
         >
-          {sending ? "Registrando..." : "Jugar"}
+          {sending ? (cv ? "Enviando tu CV..." : "Registrando...") : "Jugar"}
           {!sending && <FaArrowRight />}
         </button>
         <p className="text-[11px] text-zinc-500 text-center leading-relaxed">
-          Usamos tus datos para el ranking y para contactarte si ganás. En el ranking solo se ve tu nombre y tu empresa.
+          Usamos tus datos para el ranking y para contactarte si ganás. En el ranking solo se ve tu nombre y tu empresa. Si sumás tu CV, lo leemos y te escribimos cuando haya una búsqueda que encaje con tu perfil.
         </p>
       </form>
     </main>
