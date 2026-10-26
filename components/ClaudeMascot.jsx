@@ -14,6 +14,9 @@ const JUMP_S = 0.55;
 // Cada cuántas acciones vuelve sí o sí al QR.
 const QR_EVERY = 3;
 const STOP = Symbol("stop");
+// Llegó un puntaje nuevo: corta lo que esté haciendo para ir a festejar.
+const NEWS = Symbol("news");
+const CONFETTI = ["#BDF61D", ORANGE, "#60A5FA", "#F472B6", "#FBBF24", INK];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -93,6 +96,28 @@ function Floaters({ fx }) {
   ));
 }
 
+function Confetti() {
+  return Array.from({ length: 18 }, (_, i) => {
+    const angle = (i / 18) * Math.PI - Math.PI;
+    const dist = 70 + (i % 4) * 25;
+    return (
+      <motion.span
+        key={i}
+        className="absolute w-2.5 h-2.5"
+        style={{ left: W / 2, bottom: H / 2, backgroundColor: CONFETTI[i % CONFETTI.length] }}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: [1, 1, 0],
+          x: [0, Math.cos(angle) * dist],
+          y: [0, Math.sin(angle) * dist, Math.sin(angle) * dist + 80],
+          rotate: [0, 360 + i * 40],
+        }}
+        transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 0.3, delay: (i % 3) * 0.08 }}
+      />
+    );
+  });
+}
+
 function Laptop() {
   return (
     <motion.svg
@@ -126,7 +151,8 @@ function Laptop() {
 
 // La mascota de Claude paseando por abajo de la pantalla del stand.
 // Elige acciones al azar; `targetRef` es la tarjeta del QR, a la que vuelve seguido.
-export default function ClaudeMascot({ targetRef }) {
+// `news` es el último puntaje nuevo del ranking ({ name, floors, position, at }).
+export default function ClaudeMascot({ targetRef, news }) {
   const [scope, animate] = useAnimate();
   const bodyRef = useRef(null);
   const bugRef = useRef(null);
@@ -136,6 +162,14 @@ export default function ClaudeMascot({ targetRef }) {
   const [spikes, setSpikes] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [blink, setBlink] = useState(false);
+  const newsRef = useRef(null);
+  const wakeRef = useRef(null);
+
+  useEffect(() => {
+    if (!news) return;
+    newsRef.current = news;
+    wakeRef.current?.();
+  }, [news]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -149,13 +183,19 @@ export default function ClaudeMascot({ targetRef }) {
     let alive = true;
     let x = -W - 40;
     let dir = 1;
+    let celebrating = false;
+    // Se resuelve cuando llega un puntaje nuevo, para no esperar a que termine la acción.
+    const armInterrupt = () => new Promise((r) => (wakeRef.current = r));
+    let interrupted = armInterrupt();
     const check = () => {
       if (!alive) throw STOP;
+      if (newsRef.current && !celebrating) throw NEWS;
     };
-    const sleep = async (ms) => {
-      await wait(ms);
+    const guard = async (p) => {
+      await (celebrating ? p : Promise.race([p, interrupted]));
       check();
     };
+    const sleep = (ms) => guard(wait(ms));
     const vw = () => window.innerWidth;
     const minX = () => vw() * 0.04;
     const maxX = () => vw() * 0.96 - W;
@@ -172,8 +212,7 @@ export default function ClaudeMascot({ targetRef }) {
       if (Math.abs(to - x) < 2) return;
       dir = to > x ? 1 : -1;
       setPose({ mode, dir, lookUp: false });
-      await animate(scope.current, { x: to }, { duration: Math.abs(to - x) / speed, ease: "linear" });
-      check();
+      await guard(animate(scope.current, { x: to }, { duration: Math.abs(to - x) / speed, ease: "linear" }));
       x = to;
     };
     const stand = async (ms, text, pose = {}) => {
@@ -183,8 +222,7 @@ export default function ClaudeMascot({ targetRef }) {
       setSay(null);
     };
     const hop = async (h) => {
-      await animate(bodyRef.current, { y: [0, -h, 0] }, { duration: 0.4, ease: "easeOut" });
-      check();
+      await guard(animate(bodyRef.current, { y: [0, -h, 0] }, { duration: 0.4, ease: "easeOut" }));
     };
     const celebrate = async (text, hops = 2) => {
       setPose((p) => ({ ...p, mode: "cheer", lookUp: false }));
@@ -219,12 +257,13 @@ export default function ClaudeMascot({ targetRef }) {
       setPose({ mode: "jump", dir: d, lookUp: false });
       await sleep(500);
       for (let i = 0; i < n; i++) {
-        await Promise.all([
-          animate(scope.current, { x: x + len }, { duration: JUMP_S, ease: "linear" }),
-          animate(bodyRef.current, { y: [0, -100, 0] }, { duration: JUMP_S, ease: ["easeOut", "easeIn"] }),
-          animate(bodyRef.current, { rotate: [0, 360 * d] }, { duration: JUMP_S, ease: "linear" }),
-        ]);
-        check();
+        await guard(
+          Promise.all([
+            animate(scope.current, { x: x + len }, { duration: JUMP_S, ease: "linear" }),
+            animate(bodyRef.current, { y: [0, -100, 0] }, { duration: JUMP_S, ease: ["easeOut", "easeIn"] }),
+            animate(bodyRef.current, { rotate: [0, 360 * d] }, { duration: JUMP_S, ease: "linear" }),
+          ])
+        );
         x += len;
       }
       setSpikes([]);
@@ -284,13 +323,13 @@ export default function ClaudeMascot({ targetRef }) {
       await animate(bugRef.current, { x: bugStart, opacity: 1 }, { duration: 0 });
       setDir(d);
       await stand(900, "¿Un bug? 🐛", { dir: d });
-      await Promise.all([
-        animate(bugRef.current, { x: bugEnd }, { duration: 1.4, ease: "easeInOut" }),
-        move(bugEnd - W / 2, 380, "run"),
-      ]);
-      check();
-      await animate(bugRef.current, { opacity: 0, scale: [1, 1.6, 0] }, { duration: 0.3 });
-      check();
+      await guard(
+        Promise.all([
+          animate(bugRef.current, { x: bugEnd }, { duration: 1.4, ease: "easeInOut" }),
+          move(bugEnd - W / 2, 380, "run"),
+        ])
+      );
+      await guard(animate(bugRef.current, { opacity: 0, scale: [1, 1.6, 0] }, { duration: 0.3 }));
       await celebrate(pick(LINES.bug), 2);
     };
 
@@ -317,10 +356,51 @@ export default function ClaudeMascot({ targetRef }) {
       const exitRight = x > vw() / 2;
       await move(exitRight ? vw() + 40 : -W - 40, RUN, "run");
       x = exitRight ? -W - 40 : vw() + 40;
-      await animate(scope.current, { x }, { duration: 0 });
-      check();
+      await guard(animate(scope.current, { x }, { duration: 0 }));
       await sleep(800);
       await move(between(minX(), maxX()), WALK, "walk");
+    };
+
+    // Deja la escena limpia si una acción se cortó a la mitad.
+    const resetScene = async () => {
+      setSay(null);
+      setFx(null);
+      setSpikes([]);
+      setBlocks([]);
+      x = new DOMMatrix(getComputedStyle(scope.current).transform).m41;
+      await Promise.all([
+        animate(bugRef.current, { opacity: 0 }, { duration: 0.15 }),
+        animate(bodyRef.current, { y: 0, rotate: 0 }, { duration: 0.15 }),
+      ]);
+    };
+
+    // Va corriendo abajo del ranking a festejar al jugador.
+    const celebrateScore = async () => {
+      const { name, floors, position } = newsRef.current;
+      newsRef.current = null;
+      celebrating = true;
+      try {
+        const player = name.split(" · ")[0];
+        setSay("¡Puntaje nuevo! 👀");
+        await move(vw() * 0.3 - W / 2, RUN, "run");
+        setPose({ mode: "cheer", dir: 1, lookUp: true });
+        setFx("confetti");
+        setSay(`¡Bien ahí, ${player}! ${floors} ${floors === 1 ? "piso" : "pisos"} 🎉`);
+        for (let i = 0; i < 3; i++) await hop(34);
+        await sleep(2200);
+        if (position === 1) {
+          setSay("¡Nuevo líder del ranking! 🏆");
+          await hop(50);
+          await hop(50);
+          await sleep(2000);
+        }
+        setSay(null);
+        setFx(null);
+        await stand(2000, "¿Quién lo supera? 👉", { dir: 1 });
+      } finally {
+        celebrating = false;
+        interrupted = armInterrupt();
+      }
     };
 
     const ACTIONS = [geometryDash, watchRanking, nap, dance, code, chaseBug, buildTower, hello, crossScreen];
@@ -328,22 +408,30 @@ export default function ClaudeMascot({ targetRef }) {
     const loop = async () => {
       await animate(scope.current, { x }, { duration: 0 });
       await animate(bugRef.current, { opacity: 0 }, { duration: 0 });
-      await visitQr();
-      let sinceQr = 0;
+      let sinceQr = QR_EVERY;
       let last = null;
       while (alive) {
-        let action;
-        if (sinceQr >= QR_EVERY) {
-          action = visitQr;
-          sinceQr = 0;
-        } else {
-          do action = pick(ACTIONS);
-          while (action === last);
-          sinceQr++;
+        try {
+          if (newsRef.current) {
+            await celebrateScore();
+            continue;
+          }
+          let action;
+          if (sinceQr >= QR_EVERY) {
+            action = visitQr;
+            sinceQr = 0;
+          } else {
+            do action = pick(ACTIONS);
+            while (action === last);
+            sinceQr++;
+          }
+          last = action;
+          await action();
+          await sleep(between(300, 900));
+        } catch (e) {
+          if (e !== NEWS) throw e;
+          await resetScene();
         }
-        last = action;
-        await action();
-        await sleep(between(300, 900));
       }
     };
     loop().catch((e) => {
@@ -411,6 +499,7 @@ export default function ClaudeMascot({ targetRef }) {
           )}
         </AnimatePresence>
         {!say && <Floaters fx={fx} />}
+        {fx === "confetti" && <Confetti />}
 
         <div ref={bodyRef}>
           <div className="relative" style={{ transform: `scaleX(${pose.dir})` }}>

@@ -22,6 +22,8 @@ export default function RankingStand() {
   const [slide, setSlide] = useState(0);
   const reduceMotion = useReducedMotion();
   const cardRef = useRef(null);
+  const prevRows = useRef(null);
+  const [news, setNews] = useState(null);
 
   useEffect(() => {
     const url = `${window.location.origin}/juego`;
@@ -41,7 +43,11 @@ export default function RankingStand() {
       try {
         const res = await fetch("/api/juego/ranking");
         const data = await res.json();
-        if (active && data.success) setRows(data.ranking);
+        if (!active || !data.success) return;
+        setRows(data.ranking);
+        const fresh = newScore(prevRows.current, data.ranking);
+        if (fresh) setNews({ ...fresh, at: Date.now() });
+        prevRows.current = data.ranking;
       } catch {}
     };
     load();
@@ -95,9 +101,17 @@ export default function RankingStand() {
           </AnimatePresence>
         </div>
       </div>
-      {!reduceMotion && <ClaudeMascot targetRef={cardRef} />}
+      {!reduceMotion && <ClaudeMascot targetRef={cardRef} news={news} />}
     </div>
   );
+}
+
+// Puntaje nuevo: alguien entró al top o mejoró su marca. En la primera carga no hay con qué comparar.
+// Si hay varios a la vez, festeja el mejor ubicado.
+function newScore(prev, rows) {
+  if (!prev) return null;
+  const before = new Map(prev.map((r) => [r.name, r.floors]));
+  return rows.find((r) => !before.has(r.name) || r.floors > before.get(r.name)) || null;
 }
 
 function QrPanel({ qr, gameUrl }) {
